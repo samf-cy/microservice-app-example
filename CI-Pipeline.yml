@@ -28,9 +28,17 @@ stages:
         repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        imageName: '$(ImageName)'
+        imageName: 'frontend'
         tags: |
           $(tag)
+    - task: Docker@2
+      displayName: 'Push the Frontend Docker image to Dockerhub'
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/devops'
+        command: 'push'
+        imageName: 'frontend'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
     - task: Docker@2
       displayName: Build auth-api image
       inputs:
@@ -38,9 +46,17 @@ stages:
         repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
-        imageName: '$(ImageName)'
+        imageName: auth-api
         tags: |
           $(tag)
+    - task: Docker@2
+      displayName: 'Push the auth-api Docker image to Dockerhub'
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/devops'
+        command: 'push'
+        imageName: 'auth-api'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
     - task: Docker@2
       displayName: Build todos-api image
       inputs:
@@ -69,10 +85,4 @@ stages:
         command: 'build'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
-    - task: Docker@2
-      displayName: 'Push the Docker image to Dockerhub'
-      inputs:
-        containerRegistry: 'Docker Hub'
-        repository: 'amsf9619/devops'
-        command: 'push'
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
+   
