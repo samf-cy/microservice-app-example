@@ -9,6 +9,7 @@ resources:
 - repo: self
 
 variables:
+  ImageName: 'amsf9619/devops:$(Build.BuildId)' 
   tag: '$(Build.BuildId)'
 
 stages:
@@ -23,36 +24,56 @@ stages:
     - task: Docker@2
       displayName: Build frontend image
       inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
+        imageName: '$(ImageName)'
         tags: |
           $(tag)
     - task: Docker@2
       displayName: Build auth-api image
       inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
+        imageName: '$(ImageName)'
         tags: |
           $(tag)
     - task: Docker@2
       displayName: Build todos-api image
       inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/todos-api/Dockerfile'
+        imageName: '$(ImageName)'
         tags: |
           $(tag)
     - task: Docker@2
       displayName: Build users-api image
       inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619 / devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/users-api/Dockerfile'
+        imageName: '$(ImageName)'
         tags: |
           $(tag)
     - task: Docker@2
       displayName: Build log-message-processor image
       inputs:
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/log-message-processor/Dockerfile'
-        tags: |
-          $(tag)
-    
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619 / devops'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: 'Push the Docker image to Dockerhub'
+      inputs:
+        containerregistrytype: 'Container Registry'
+        dockerRegistryEndpoint: 'Docker Hub'
+        command: 'Push an image'
+        imageName: '$(ImageName)'
+      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
