@@ -10,7 +10,7 @@ resources:
 
 variables:
   ImageName: 'amsf9619/frontend' 
-  tag: '$(Build.BuildId)'
+  tag: 'latest'
 
 stages:
 - stage: Build
@@ -30,7 +30,7 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
         imageName: 'front'
         tags: |
-          'latest'
+          $(tag)
     - task: Docker@2
       displayName: 'Push the Frontend Docker image to Dockerhub'
       inputs:
