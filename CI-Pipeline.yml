@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  ImageName: 'amsf9619/frontend:$(Build.BuildId)' 
+  ImageName: 'amsf9619/frontend' 
   tag: '$(Build.BuildId)'
 
 stages:
@@ -28,7 +28,7 @@ stages:
         repository: 'amsf9619/devops'
         command: build
         dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        imageName: $(ImageName)
+        imageName: frontend
         tags: |
           $(tag)
     - task: Docker@2
@@ -37,5 +37,5 @@ stages:
         containerRegistry: 'Docker Hub'
         repository: 'amsf9619/devops'
         command: 'push'
-        imageName: $(ImageName)
+        imageName: frontend
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
