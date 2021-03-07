@@ -30,6 +30,12 @@ stages:
         imageName: $(ImageName)
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
+- stage: Push
+  displayName: Push Image image
+  jobs:
+  - job: Push 
+    displayName: Push
+    steps:
     - task: Docker@2
       displayName: 'Push the Frontend Docker image to Dockerhub'
       inputs:
