@@ -27,6 +27,7 @@ stages:
         containerRegistry: 'Docker Hub'
         repository: 'amsf9619/frontend'
         command: 'build'
+        imageName: $(ImageName)
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
     - task: Docker@2
@@ -35,4 +36,5 @@ stages:
         containerRegistry: 'Docker Hub'
         repository: 'amsf9619/frontend'
         command: 'push'
+        imageName: $(ImageName)
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
