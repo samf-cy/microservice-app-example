@@ -43,4 +43,5 @@ stages:
         repository: 'amsf9619/frontend'
         command: 'push'
         imageName: $(ImageName)
+        tags: $(tag)
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
