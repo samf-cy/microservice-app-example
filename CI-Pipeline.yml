@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  ImageName: 'frontend' 
+  ImageName: 'amsf9619/frontend:$(Build.BuildId)'
   tag: 'latest'
 
 stages:
