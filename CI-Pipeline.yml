@@ -10,7 +10,7 @@ resources:
 
 variables:
   ImageName: 'amsf9619/frontend:$(Build.BuildId)'
-  tag: 'latest'
+  tag: '$(Build.BuildId)'
 
 stages:
 - stage: Build
