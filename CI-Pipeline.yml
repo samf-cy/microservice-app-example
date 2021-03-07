@@ -25,15 +25,14 @@ stages:
       displayName: Build frontend image
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: $(ImageName)
-        command: build
-        dockerfile: '$(Build.SourcesDirectory)/frontend/Dockerfile'
-        tags: |
-          $(tag)
+        repository: 'amsf9619/frontend'
+        command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
     - task: Docker@2
       displayName: 'Push the Frontend Docker image to Dockerhub'
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: $(ImageName)
+        repository: 'amsf9619/frontend'
         command: 'push'
       condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
