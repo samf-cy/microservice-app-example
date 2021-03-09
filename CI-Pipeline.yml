@@ -30,19 +30,3 @@ stages:
         imageName: $(ImageName)
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
-- stage: Push
-  displayName: Push Image image
-  jobs:
-  - job: Push 
-    displayName: Push
-    steps:
-    - task: Docker@2
-      displayName: 'Push the Frontend Docker image to Dockerhub'
-      inputs:
-        imageName: $(ImageName)
-        tags: '$(Build.BuildId)'
-        containerRegistry: 'Docker Hub'
-        repository: 'amsf9619/frontend'
-        command: 'push'
-        
-      condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest')) 
