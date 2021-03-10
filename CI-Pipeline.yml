@@ -41,5 +41,6 @@ stages:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'Azure Private cluster'
         azureResourceGroup: 'privatecluster'
+        kubernetesCluster: 'aks-master'
         command: 'apply'
         arguments: '-f deploy.yaml'
