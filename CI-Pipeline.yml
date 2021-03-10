@@ -9,7 +9,7 @@ resources:
 - repo: self
 
 variables:
-  ImageName: 'amsf9619/frontend'
+  ImageName: 'amsf9619/test'
   tag: '$(Build.BuildId)'
 
 stages:
@@ -25,7 +25,15 @@ stages:
       displayName: Build frontend image
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: 'amsf9619/frontend'
+        repository: 'amsf9619/test'
         command: 'build'
+        Dockerfile: '**/Dockerfile'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: Push frontend image
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/test'
+        command: 'push'
         Dockerfile: '**/Dockerfile'
         tags: '$(tag)'
