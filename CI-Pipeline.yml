@@ -9,7 +9,6 @@ resources:
 - repo: self
 
 variables:
-  ImageName: 'amsf9619/test'
   tag: '$(Build.BuildId)'
 
 stages:
@@ -22,18 +21,28 @@ stages:
       vmImage: ubuntu-latest
     steps:
     - task: Docker@2
-      displayName: Build frontend image
+      displayName: Build auth image
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: 'amsf9619/test'
+        repository: 'amsf9619/auth'
         command: 'build'
-        Dockerfile: '**/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
         tags: '$(tag)'
+
+    - task: Docker@2
+      displayName: Build todos-api image
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/todos'
+        command: 'build'
+        Dockerfile: '$(Build.SourcesDirectory)/todos-api/Dockerfile'
+        tags: '$(tag)'
+
     - task: Docker@2
       displayName: Push frontend image
       inputs:
         containerRegistry: 'Docker Hub'
-        repository: 'amsf9619/test'
+        repository: 'amsf9619/todos'
         command: 'push'
-        Dockerfile: '**/Dockerfile'
+        dockerfile: '$(Build.SourcesDirectory)/todos-api/Dockerfile'
         tags: '$(tag)'
