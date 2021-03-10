@@ -41,6 +41,5 @@ stages:
         connectionType: 'Azure Resource Manager'
         azureSubscriptionEndpoint: 'Azure Private cluster'
         azureResourceGroup: 'privatecluster'
-        kubernetesCluster: 'cluster'
         command: 'apply'
         arguments: '-f deploy.yaml'
