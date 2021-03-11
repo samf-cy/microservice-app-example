@@ -1,0 +1,49 @@
+# Docker
+# Build a Docker image
+# https://docs.microsoft.com/azure/devops/pipelines/languages/docker
+name : Docker-CI
+trigger:
+- master
+
+resources:
+- repo: self
+
+variables:
+  tag: '$(Build.BuildId)'
+
+stages:
+- stage: Build
+  displayName: Build image
+  jobs:
+  - job: Build
+    displayName: Build
+    pool:
+      name: 'devops-AKS'
+      demands:
+       - agent.name -equals vmdep
+        
+    steps:
+    - task: Docker@2
+      displayName: Build auth image
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/auth'
+        command: 'build'
+        dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
+        tags: '$(tag)'
+    - task: Docker@2
+      displayName: Push auth image
+      inputs:
+        containerRegistry: 'Docker Hub'
+        repository: 'amsf9619/auth'
+        command: 'push'
+        dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
+        tags: '$(tag)'
+    - task: Kubernetes@1
+      inputs:
+        connectionType: 'Azure Resource Manager'
+        azureSubscriptionEndpoint: 'Azure Stack AKS Cluster'
+        azureResourceGroup: 'RG-AKS-Cluster'
+        kubernetesCluster: 'master-node'
+        command: 'apply'
+        arguments: '-f $(Build.SourcesDirectory)/deploy.yaml'
