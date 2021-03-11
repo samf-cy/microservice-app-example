@@ -2,10 +2,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: private-reg
+  name: auth
 spec:
   containers:
   - name: auth
     image: amsf9619/auth
-  imagePullSecrets:
-  - name: dockerhub
+
