@@ -38,9 +38,8 @@ stages:
         tags: '$(tag)'
     - task: Kubernetes@1
       inputs:
-        connectionType: 'Azure Resource Manager'
-        azureSubscriptionEndpoint: 'Azure Private cluster'
-        azureResourceGroup: 'privatecluster'
+        connectionType: 'Kubernetes'
+        azureResourceGroup: 'cluster'
         kubernetesCluster: 'aks-master'
         command: 'apply'
         arguments: '-f deploy.yaml'
