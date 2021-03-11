@@ -37,9 +37,9 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/auth-api/Dockerfile'
         tags: '$(tag)'
     - task: Kubernetes@1
+      displayName: kubectl apply
       inputs:
-        connectionType: 'Kubernetes'
-        azureResourceGroup: 'cluster'
-        kubernetesCluster: 'aks-master'
+        connectionType: Kubernetes Service Connection
+        kubernetesServiceEndpoint: 'Kubernetes Cluster'
         command: 'apply'
         arguments: '-f deploy.yaml'
