@@ -6,5 +6,5 @@ metadata:
 spec:
   containers:
   - name: auth
-    image: amsf9619/auth
+    image: amsf9619/auth:243
 
