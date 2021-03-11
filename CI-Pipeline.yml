@@ -42,4 +42,4 @@ stages:
         connectionType: Kubernetes Service Connection
         kubernetesServiceEndpoint: 'Kubernetes Cluster'
         command: 'apply'
-        arguments: '-f $(Build.SourcesDirectory)/k8s/auth-api/deployment.yaml'
+        arguments: '-f $(Build.SourcesDirectory)/dep.yaml'
