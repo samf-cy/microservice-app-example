@@ -3,8 +3,6 @@ kind: Pod
 metadata:
   name: auth-api
 spec:
-  replicas: 2
-    spec:
-      containers:
-        name: auth
-        image: amsf9619/auth:148
+  containers:
+    name: auth
+    image: amsf9619/auth:148
