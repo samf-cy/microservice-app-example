@@ -9,6 +9,6 @@ spec:
       labels:
         app: microservice-app-example
     spec:
-      containers:       
-        image: amsf9619/auth
+      containers:
         name: auth
+        image: amsf9619/auth:148
