@@ -4,10 +4,6 @@ metadata:
   name: auth-api
 spec:
   replicas: 2
-  template:
-    metadata:
-      labels:
-        app: microservice-app-example
     spec:
       containers:
         name: auth
