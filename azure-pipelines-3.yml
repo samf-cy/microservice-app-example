@@ -20,7 +20,7 @@ stages:
     pool:
       name: 'devops-AKS'
       demands:
-       - agent.name -equals vmdep
+       - agent.name -equals VM-Deployment
         
     steps:
     - task: Docker@2
